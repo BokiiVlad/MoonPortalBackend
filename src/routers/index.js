@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import bookingsRoutes from './booking.js';
-import scheduleRouter from './schedule.js';
+import contactRouter from './contact.js';
 
 const router = Router();
 
 router.use('/bookings', bookingsRoutes);
-router.use('/schedule', scheduleRouter);
+router.use('/contact', contactRouter);
 
 export default router;

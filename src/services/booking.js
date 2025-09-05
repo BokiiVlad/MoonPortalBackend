@@ -1,45 +1,24 @@
-import createHttpError from "http-errors";
-import { ScheduleCollection } from "../db/models/schedule.js";
-import { BookingCollection } from "../db/models/booking.js";
+import nodemailer from "nodemailer";
 
-export const setBooking = async (data) => {
-  const { date, time, sessionType, name, email, message } = data;
+export const sendBooking = async ({ name, email }) => {
 
-
-  if (!date || !time || !sessionType || !name || !email) {
-    throw createHttpError(404, 'Missing required fields');
-  }
-
-  const normalized = new Date(date);
-  normalized.setHours(0, 0, 0, 0);
-  const dayEnd = new Date(normalized.getTime() + 86399999);
+  const transporter = nodemailer.createTransport({
+    host: "smtp.example.com",
+    port: 587,
+    auth: {
+      user: "your_email@example.com",
+      pass: "password",
+    },
+  });
 
 
-  const schedule = await ScheduleCollection.findOne({
-    date: { $gte: normalized, $lte: dayEnd },
-    isWorking: true,
-  }).select('_id availableSlots');
+  await transporter.sendMail({
+    from: '"MoonPortal" <your_email@example.com>',
+    to: "admin@example.com",
+    subject: "New booking",
+    text: `Name: ${name}\nEmail: ${email}`,
+  });
 
-  if (!schedule) {
-    throw createHttpError(404, 'Schedule not found or non-working day');
-  }
-  if (!schedule.availableSlots.includes(time)) {
-    throw createHttpError(409, 'Selected time is not available');
-  }
 
-  await ScheduleCollection.findOneAndUpdate({
-    _id: schedule._id
-  }, {
-    $pull: { availableSlots: time },
-  })
-
-  const bookingCreate = await BookingCollection.create({
-    date: normalized,
-    time,
-    sessionType,
-    name,
-    email,
-    message,
-  })
-  return bookingCreate;
-}
+  return { name, email };
+};

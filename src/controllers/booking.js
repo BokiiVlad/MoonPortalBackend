@@ -1,12 +1,12 @@
-import { setBooking } from "../services/booking.js";
+import { sendBooking } from "../services/booking.js";
 
-export const setBookingController = async (req, res) => {
+export const sendBookingController = async (req, res) => {
 
-    const booking = await setBooking(req.body);
+    const booking = await sendBooking(req.body);
 
     res.status(200).json({
         status: 200,
-        message: 'Successfully found info a booking',
+        message: 'Successful booking request',
         data: booking,
     });
 }
