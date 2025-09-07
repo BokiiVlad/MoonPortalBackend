@@ -1,20 +1,21 @@
 import nodemailer from "nodemailer";
-
-export const sendContact = async ({ name, email, message }) => {
+import { getEnvVar } from "../utils/getEnvVar.js";
+export const sendContactRequest = async ({ name, email, message }) => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.example.com",       // заміни на свій SMTP сервер
-    port: 587,                      // або 465 для SSL
+    host: "smtp-relay.brevo.com",
+    port: 587,
     auth: {
-      user: "your_email@example.com",  // твій email
-      pass: "your_email_password",     // пароль або app password
+      user: getEnvVar("SMTP_USER"),
+      pass: getEnvVar("SMTP_PASS"),
     },
   });
 
   await transporter.sendMail({
-    from: '"MoonPortal" <your_email@example.com>',
-    to: "admin@example.com",
+    from: `"MoonPortal" <${getEnvVar("SMTP_USER")}>`,
+    to: getEnvVar("ADMIN_EMAIL"),
     subject: "New Contact Request",
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    replyTo: email,
   });
 
   return { name, email, message };

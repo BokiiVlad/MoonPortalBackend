@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { setBookingController } from '../controllers/booking.js';
+import { sendBookingController } from "../controllers/booking.js"
 
 
 const router = Router();
 
-router.post('/', ctrlWrapper(setBookingController))
+router.post('/', ctrlWrapper(sendBookingController))
 
 export default router;

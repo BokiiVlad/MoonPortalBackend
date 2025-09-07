@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { setContactController } from '../controllers/booking.js';
+import { sendContactController } from '../controllers/contact.js';
+
 
 
 const router = Router();
 
-router.post('/', ctrlWrapper(setContactController))
+router.post('/', ctrlWrapper(sendContactController))
 
 export default router;
 
