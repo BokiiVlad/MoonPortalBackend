@@ -4,13 +4,18 @@ import { getEnvVar } from "../utils/getEnvVar.js";
 export const sendBooking = async ({ name, email }) => {
 
   const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
+    host: getEnvVar("SMTP_HOST"),
+    port: Number(getEnvVar("SMTP_PORT")),
+    secure: false,
     auth: {
       user: getEnvVar("SMTP_USER"),
       pass: getEnvVar("SMTP_PASS"),
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
+
 
   await transporter.sendMail({
     from: `"MoonPortal" <${getEnvVar("SMTP_USER")}>`,
