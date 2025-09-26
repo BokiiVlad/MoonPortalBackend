@@ -16,11 +16,14 @@ export const sendBooking = async ({ name, email }) => {
         },
         To: [
           {
-            Email: getEnvVar("ADMIN_EMAIL"),
+            Email: getEnvVar("FROM_EMAIL"),
           },
         ],
         Subject: "New booking",
         TextPart: `Name: ${name}\nEmail: ${email}`,
+        ReplyTo: {
+          Email: email,
+        },
       },
     ],
   });
