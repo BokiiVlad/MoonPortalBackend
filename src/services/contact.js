@@ -1,7 +1,8 @@
 import Mailjet from "node-mailjet";
 import { getEnvVar } from "../utils/getEnvVar.js";
 
-export const sendContactRequest = async ({ name, email, message }) => {
+export const sendContactRequest = async ({ name, email, message =
+  "" }) => {
   const mailjet = Mailjet.apiConnect(
     getEnvVar("MAILJET_API_KEY"),
     getEnvVar("MAILJET_API_SECRET")
