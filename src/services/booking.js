@@ -16,7 +16,7 @@ export const sendBooking = async ({ name, email }) => {
         },
         To: [
           {
-            Email: getEnvVar("FROM_EMAIL"),
+            Email: getEnvVar("ADMIN_EMAIL"),
           },
         ],
         Subject: "New booking",

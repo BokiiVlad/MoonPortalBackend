@@ -16,7 +16,7 @@ export const sendContactRequest = async ({ name, email, message = "" }) => {
         },
         To: [
           {
-            Email: getEnvVar("FROM_EMAIL"),
+            Email: getEnvVar("ADMIN_EMAIL"),
           },
         ],
         Subject: "New Contact Request",
