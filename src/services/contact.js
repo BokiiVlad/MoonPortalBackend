@@ -21,9 +21,6 @@ export const sendContactRequest = async ({ name, email, message = "" }) => {
         ],
         Subject: "New Contact Request",
         TextPart: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-        ReplyTo: {
-          Email: email,
-        },
       },
     ],
   });

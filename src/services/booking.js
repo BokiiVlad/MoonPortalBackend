@@ -21,9 +21,6 @@ export const sendBooking = async ({ name, email }) => {
         ],
         Subject: "New booking",
         TextPart: `Name: ${name}\nEmail: ${email}`,
-        ReplyTo: {
-          Email: email,
-        },
       },
     ],
   });
